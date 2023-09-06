@@ -67,7 +67,7 @@ mutate2sample.wearable_dataset <-
     if (grepl("na", what)) {
       if (what == "na_number") {
         new_info <-
-          expression_data[according_to_variables, ,drop = FALSE] %>%
+          expression_data[according_to_variables, , drop = FALSE] %>%
           apply(2, function(x) {
             sum(is.na(x))
           })
@@ -75,14 +75,14 @@ mutate2sample.wearable_dataset <-
 
       if (what == "na_prop") {
         new_info <-
-          expression_data[according_to_variables, ,drop = FALSE] %>%
+          expression_data[according_to_variables, , drop = FALSE] %>%
           apply(2, function(x) {
             sum(is.na(x)) / length(x)
           })
       }
     } else{
       new_info <-
-        expression_data[according_to_variables, ,drop = FALSE] %>%
+        expression_data[according_to_variables, , drop = FALSE] %>%
         apply(2, function(x) {
           calculate(x, what = what)
         })

@@ -14,15 +14,12 @@ create_wearable_dataset(
 )
 }
 \arguments{
-\item{expression_data}{MS1 peak table name.
-\url{https://tidywearable.github.io/wearabledataset/articles/data_import_and_export.html}}
+\item{expression_data}{expression_data.}
 
-\item{sample_info}{Sample information name.
-\url{https://tidywearable.github.io/wearabledataset/articles/data_import_and_export.html}}
+\item{sample_info}{Sample information name.}
 
-\item{variable_info}{MS1 peak table name.
-Columns are samples and rows are variables.
-\url{https://tidywearable.github.io/wearabledataset/articles/data_import_and_export.html}}
+\item{variable_info}{Variable information.
+Columns are samples and rows are variables.}
 
 \item{sample_info_note}{Sample information name.
 \url{https://tidywearable.github.io/wearabledataset/articles/data_import_and_export.html}}

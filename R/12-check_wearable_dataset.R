@@ -62,9 +62,14 @@ check_wearable_dataset <-
         return(check_result)
       }
 
-      if (all(colnames(sample_info) != "class")) {
-        check_result = "error: sample_info must have class."
+      if (all(colnames(sample_info) != "accurate_time")) {
+        check_result = "error: sample_info must have accurate_time."
         return(check_result)
+      }
+
+      if (!is(sample_info$accurate_time, "POSIXct")) {
+        msg <- "accurate_time in sample_info must be POSIXct."
+        errors <- c(errors, msg)
       }
 
       # if (any(is.na(sample_info$class))) {

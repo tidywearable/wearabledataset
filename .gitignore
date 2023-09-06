@@ -39,6 +39,7 @@ vignettes/
 # R Environment Variables
 .Renviron
 demo_data
+demo_data/
 
 logo.txt
 

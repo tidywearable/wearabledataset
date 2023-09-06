@@ -46,7 +46,9 @@ Imports:
     massdataset,
     tidyselect,
     vctrs,
-    ggraph
+    ggraph,
+    data.table,
+    dtplyr
 Suggests: 
     knitr,
     rmarkdown,

@@ -32,8 +32,13 @@ check_wearable_dataset_class <-
       errors <- c(errors, msg)
     }
 
-    if (all(colnames(object@sample_info) != "class")) {
-      msg <- "sample_info must have class."
+    if (all(colnames(object@sample_info) != "accurate_time")) {
+      msg <- "sample_info must have accurate_time."
+      errors <- c(errors, msg)
+    }
+
+    if (!is(object@sample_info$accurate_time, "POSIXct")) {
+      msg <- "accurate_time in sample_info must be POSIXct."
       errors <- c(errors, msg)
     }
 

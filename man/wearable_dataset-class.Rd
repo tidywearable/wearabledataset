@@ -5,10 +5,7 @@
 \alias{wearable_dataset-class}
 \title{wearable_dataset class}
 \description{
-setClassUnion("treedata_or_null", c("treedata", "NULL"))
-}
-\details{
-setClassUnion("xstringset_or_null", c("XStringSet", "NULL"))
+wearable_dataset class
 }
 \section{Slots}{
 

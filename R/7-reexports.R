@@ -1,10 +1,3 @@
-#' @importFrom massdataset check_mass_dataset_class
-#' @export
-massdataset::check_mass_dataset_class
-
-#' @importFrom massdataset check_mass_dataset
-#' @export
-massdataset::check_mass_dataset
 
 #' @importFrom dplyr filter
 #' @export

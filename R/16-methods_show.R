@@ -1,6 +1,3 @@
-
-
-
 setMethod(
   f = "show",
   signature = "wearable_dataset",
@@ -14,7 +11,7 @@ setMethod(
     if (check_result != "all good.") {
       cat(crayon::red(check_result, "\n"))
       cat(crayon::red(
-        "You may changed the slots, try to use update_mass_dataset().\n"
+        "You may changed the slots, try to use update_wearable_dataset().\n"
       ))
     }
     cat(crayon::yellow(paste(rep("-", 20), collapse = ""), "\n"))
@@ -65,6 +62,13 @@ setMethod(
       ncol(object@variable_info_note),
       "data.frame]\n"
     )
+
+    cat(crayon::yellow(paste(rep("-", 20), collapse = ""), "\n"))
+    cat(crayon::green("Time range:\n"))
+    cat(paste(paste(as.character(
+      range(object@sample_info$accurate_time)
+    ), collapse = " to ")))
+    cat("\n")
     cat(crayon::yellow(paste(rep("-", 20), collapse = ""), "\n"))
     cat(crayon::green("Processing information (extract_process_info())\n"))
     if (.hasSlot(object = object, name = "process_info") &

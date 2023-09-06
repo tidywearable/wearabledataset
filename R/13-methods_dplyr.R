@@ -15,19 +15,10 @@ filter.wearable_dataset <-
       slot(object = .data, name = .data@activated)
 
     x <-
-      filter(x, !!!dots, .preserve = .preserve)
+      filter(dtplyr::lazy_dt(x), !!!dots, .preserve = .preserve) %>%
+      as.data.frame()
 
     slot(object = .data, name = .data@activated) = x
-
-    if (.data@activated == "annotation_table") {
-      if (nrow(.data@annotation_table) > 0) {
-        annotation_table <- .data@annotation_table
-        .data@variable_info <- .data@variable_info %>%
-          filter(variable_id %in% annotation_table$variable_id)
-        .data@expression_data <-
-          .data@expression_data[.data@variable_info$variable_id, , drop = FALSE]
-      }
-    }
 
     if (.data@activated == "sample_info") {
       .data@expression_data <-
@@ -35,12 +26,12 @@ filter.wearable_dataset <-
     }
 
     if (.data@activated == "variable_info") {
-      if (nrow(.data@annotation_table) > 0) {
-        variable_info <- .data@variable_info
-        .data@annotation_table <-
-          .data@annotation_table %>%
-          dplyr::filter(variable_id %in% variable_info$variable_id)
-      }
+      # if (nrow(.data@annotation_table) > 0) {
+      #   variable_info <- .data@variable_info
+      #   .data@annotation_table <-
+      #     .data@annotation_table %>%
+      #     dplyr::filter(variable_id %in% variable_info$variable_id)
+      # }
       .data@expression_data <-
         .data@expression_data[x$variable_id, , drop = FALSE]
     }
@@ -76,8 +67,6 @@ filter.wearable_dataset <-
 dplyr::filter
 
 
-
-
 #' @method select wearable_dataset
 #' @docType methods
 #' @importFrom rlang quos !!!
@@ -97,13 +86,14 @@ select.wearable_dataset <-
       slot(object = .data, name = .data@activated)
 
     x <-
-      select(x, !!!dots)
+      select(dtplyr::lazy_dt(x), !!!dots) %>%
+      as.data.frame()
 
     slot(object = .data, name = .data@activated) <- x
 
     if (.data@activated == "expression_data") {
       .data@sample_info <-
-        .data@sample_info[match(colnames(x), .data@sample_info$sample_id),]
+        .data@sample_info[match(colnames(x), .data@sample_info$sample_id), ]
     }
 
     if (.data@activated == "sample_info") {
@@ -156,7 +146,8 @@ arrange.wearable_dataset <-
       slot(object = .data, name = .data@activated)
 
     x <-
-      arrange(x, !!!dots)
+      arrange(dtplyr::lazy_dt(x), !!!dots) %>%
+      as.data.frame()
 
     slot(object = .data, name = .data@activated) <- x
 
@@ -165,13 +156,13 @@ arrange.wearable_dataset <-
     }
 
     if (.data@activated == "variable_info") {
-      .data@expression_data = .data@expression_data[x$variable_id, ]
+      .data@expression_data = .data@expression_data[x$variable_id,]
     }
 
     if (.data@activated == "expression_data") {
       .data@variable_info <-
         .data@variable_info[match(rownames(.data@expression_data),
-                                  .data@variable_info$variable_id), ]
+                                  .data@variable_info$variable_id),]
     }
 
     return(.data)
@@ -204,11 +195,12 @@ count.wearable_dataset <-
     x =
       slot(object = x, name = x@activated)
 
-    count(x,
-          !!!dots,
-          wt = !!enquo(wt),
-          sort = sort,
-          name = name)
+    dtplyr::lazy_dt(x) %>%
+      count(!!!dots,
+            wt = !!enquo(wt),
+            sort = sort,
+            name = name) %>%
+      as.data.frame()
   }
 
 
@@ -230,10 +222,11 @@ tally.wearable_dataset <-
     x =
       slot(object = x, name = x@activated)
 
-    tally(x,
-          wt = !!enquo(wt),
-          sort = sort,
-          name = name)
+      dtplyr::lazy_dt(x) %>%
+      tally(wt = !!enquo(wt),
+            sort = sort,
+            name = name) %>%
+      as.data.frame()
   }
 
 #' @importFrom dplyr count
@@ -296,7 +289,7 @@ group_by.wearable_dataset <-
 
     if (.data@activated == "variable_info") {
       .data@expression_data <-
-        .data@expression_data[x$variable_id,]
+        .data@expression_data[x$variable_id, ]
     }
 
     return(.data)
@@ -326,14 +319,15 @@ left_join.wearable_dataset <-
            ...,
            keep = FALSE) {
     left_join_wearable_dataset(
-      x = x,
-      y = y,
+      x = dtplyr::lazy_dt(x),
+      y = dtplyr::lazy_dt(y),
       by = by,
       copy = copy,
       suffix = suffix,
       keep = keep,
       ...
-    )
+    ) %>%
+      as.data.frame()
   }
 
 #' @importFrom dplyr left_join
@@ -375,12 +369,15 @@ left_join_wearable_dataset <-
       slot(object = x, name = x@activated)
 
     new_x <-
-      left_join(new_x,
-                y,
-                by = by,
-                copy = copy,
-                suffix = suffix,
-                ...)
+      left_join(
+        dtplyr::lazy_dt(new_x),
+        dtplyr::lazy_dt(y),
+        by = by,
+        copy = copy,
+        suffix = suffix,
+        ...
+      ) %>%
+      as.data.frame()
 
     slot(object = x, name = x@activated) <- new_x
 
@@ -420,7 +417,8 @@ mutate.wearable_dataset <- function(.data, ...) {
     slot(object = .data, name = .data@activated)
 
   temp_slot <-
-    mutate(temp_slot, !!!dots)
+    mutate(dtplyr::lazy_dt(temp_slot), !!!dots) %>%
+    as.data.frame()
 
   slot(object = .data, name = .data@activated) = temp_slot
 
@@ -589,7 +587,7 @@ pull.wearable_dataset <- function(.data, var = -1, ...) {
 
   temp_slot =
     slot(object = .data, name = .data@activated)
-  pull(temp_slot, !!var, ...)
+  pull(dtplyr::lazy_dt(temp_slot), !!var, ...)
 }
 
 #' @importFrom dplyr pull
@@ -658,7 +656,7 @@ relocate.wearable_dataset <-
     slot(object = .data, name = .data@activated) = out
 
     if (.data@activated == "expression_data") {
-      .data@sample_info = .data@sample_info[match(colnames(out), .data@sample_info$sample_id), ]
+      .data@sample_info = .data@sample_info[match(colnames(out), .data@sample_info$sample_id),]
     }
 
     return(.data)
@@ -690,7 +688,8 @@ rename.wearable_dataset <-
       slot(object = .data, name = .data@activated)
 
     x <-
-      rename(x, !!!dots)
+      rename(dtplyr::lazy_dt(x), !!!dots) %>%
+      as.data.frame()
 
     slot(object = .data, name = .data@activated) = x
 
@@ -741,7 +740,8 @@ slice.wearable_dataset <-
       slot(object = .data, name = .data@activated)
 
     x =
-      slice(x, !!!dots, .preserve = .preserve)
+      slice(dtplyr::lazy_dt(x), !!!dots, .preserve = .preserve) %>%
+      as.data.frame()
 
     slot(object = .data, name = .data@activated) = x
 
@@ -810,19 +810,22 @@ slice_head.wearable_dataset <-
       n = "missing"
       prop = "missing"
       x =
-        slice_head(x, n = 1)
+        slice_head(dtplyr::lazy_dt(x), n = 1) %>%
+        as.data.frame()
     }
 
     if (!missing(n)) {
       prop = "missing"
       x =
-        slice_head(x, n = n)
+        slice_head(dtplyr::lazy_dt(x), n = n) %>%
+        as.data.frame()
     }
 
     if (missing(n) & !missing(prop)) {
       n = "missing"
       x =
-        slice_head(x, prop = prop)
+        slice_head(dtplyr::lazy_dt(x), prop = prop) %>%
+        as.data.frame()
     }
 
     slot(object = .data, name = .data@activated) = x
@@ -903,19 +906,22 @@ slice_tail.wearable_dataset <-
       n = "missing"
       prop = "missing"
       x =
-        slice_tail(x, n = 1)
+        slice_tail(dtplyr::lazy_dt(x), n = 1) %>%
+        as.data.frame()
     }
 
     if (!missing(n)) {
       prop = "missing"
       x =
-        slice_tail(x, n = n)
+        slice_tail(dtplyr::lazy_dt(x), n = n) %>%
+        as.data.frame()
     }
 
     if (missing(n) & !missing(prop)) {
       n = "missing"
       x =
-        slice_tail(x, prop = prop)
+        slice_tail(dtplyr::lazy_dt(x), prop = prop) %>%
+        as.data.frame()
     }
 
     slot(object = .data, name = .data@activated) = x
@@ -993,28 +999,37 @@ slice_sample.wearable_dataset <-
       n = "missing"
       prop = "missing"
       x =
-        slice_sample(x,
-                     n = 1,
-                     weight_by = weight_by,
-                     replace = FALSE)
+        slice_sample(
+          dtplyr::lazy_dt(x),
+          n = 1,
+          weight_by = weight_by,
+          replace = FALSE
+        ) %>%
+        as.data.frame()
     }
 
     if (!missing(n)) {
       prop = "missing"
       x =
-        slice_sample(x,
-                     n = n,
-                     weight_by = weight_by,
-                     replace = FALSE)
+        slice_sample(
+          dtplyr::lazy_dt(x),
+          n = n,
+          weight_by = weight_by,
+          replace = FALSE
+        ) %>%
+        as.data.frame()
     }
 
     if (missing(n) & !missing(prop)) {
       n = "missing"
       x =
-        slice_sample(x,
-                     prop = prop,
-                     weight_by = weight_by,
-                     replace = FALSE)
+        slice_sample(
+          dtplyr::lazy_dt(x),
+          prop = prop,
+          weight_by = weight_by,
+          replace = FALSE
+        ) %>%
+        as.data.frame()
     }
 
     slot(object = .data, name = .data@activated) = x
@@ -1095,30 +1110,37 @@ slice_min.wearable_dataset <-
       n = "missing"
       prop = "missing"
       x =
-        slice_min(x,
-                  order_by = !!order_by,
-                  n = 1,
-                  with_ties = with_ties)
+        slice_min(
+          dtplyr::lazy_dt(x),
+          order_by = !!order_by,
+          n = 1,
+          with_ties = with_ties
+        ) %>%
+        as.data.frame()
     }
 
     if (!missing(n)) {
       prop = "missing"
       x =
-        slice_min(x,
-                  order_by = !!order_by,
-                  n = n,
-                  with_ties = with_ties)
+        slice_min(
+          dtplyr::lazy_dt(x),
+          order_by = !!order_by,
+          n = n,
+          with_ties = with_ties
+        ) %>%
+        as.data.frame()
     }
 
     if (missing(n) & !missing(prop)) {
       n = "missing"
       x =
         slice_min(
-          x,
+          dtplyr::lazy_dt(x),
           order_by = !!order_by,
           prop = prop,
           with_ties = with_ties
-        )
+        ) %>%
+        as.data.frame()
     }
 
     slot(object = .data, name = .data@activated) = x
@@ -1201,30 +1223,37 @@ slice_max.wearable_dataset <-
       n <- "missing"
       prop <- "missing"
       x <-
-        slice_max(x,
-                  order_by = !!order_by,
-                  n = 1,
-                  with_ties = with_ties)
+        slice_max(
+          dtplyr::lazy_dt(x),
+          order_by = !!order_by,
+          n = 1,
+          with_ties = with_ties
+        ) %>%
+        as.data.frame()
     }
 
     if (!missing(n)) {
       prop <- "missing"
       x <-
-        slice_max(x,
-                  order_by = !!order_by,
-                  n = n,
-                  with_ties = with_ties)
+        slice_max(
+          dtplyr::lazy_dt(x),
+          order_by = !!order_by,
+          n = n,
+          with_ties = with_ties
+        ) %>%
+        as.data.frame()
     }
 
     if (missing(n) & !missing(prop)) {
       n <- "missing"
       x <-
         slice_max(
-          x,
+          dtplyr::lazy_dt(x),
           order_by = !!order_by,
           prop = prop,
           with_ties = with_ties
-        )
+        ) %>%
+        as.data.frame()
     }
 
     slot(object = .data, name = .data@activated) <- x
@@ -1301,7 +1330,8 @@ summarize.wearable_dataset <-
       slot(object = .data, name = .data@activated)
 
     x =
-      summarize(x, !!!dots)
+      summarize(dtplyr::lazy_dt(x), !!!dots) %>%
+      as.data.frame()
 
     return(x)
   }
@@ -1324,7 +1354,8 @@ summarise.wearable_dataset <-
       slot(object = .data, name = .data@activated)
 
     x =
-      summarise(x, !!!dots)
+      summarise(dtplyr::lazy_dt(x), !!!dots) %>%
+      as.data.frame()
 
     return(x)
   }

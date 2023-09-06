@@ -32,6 +32,8 @@
 #' @importFrom ggraph ggraph
 #' @importFrom massdataset check_column_name extract_expression_data extract_sample_info
 #' @importFrom massdataset extract_variable_info
+#' @import dtplyr
+#' @import data.table
 #' @export
 #' @return logo
 #' @examples

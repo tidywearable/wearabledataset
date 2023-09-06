@@ -1,7 +1,3 @@
-#' setClassUnion("treedata_or_null", c("treedata", "NULL"))
-#'
-#' setClassUnion("xstringset_or_null", c("XStringSet", "NULL"))
-
 #' @title wearable_dataset class
 #' @docType class
 #' @slot ... Other slots from mass_dataset class object in massdataset pacakge
@@ -9,31 +5,20 @@
 #' @exportClass wearable_dataset
 setClass(
   "wearable_dataset",
-  contains = "mass_dataset"
-  # slots    = c(
-  #   otu_tree  = "treedata_or_null",
-  #   taxa_tree = "treedata_or_null",
-  #   ref_seq = "xstringset_or_null"
-  # ),
-  # prototype = list(
-  #   otu_tree  = NULL,
-  #   taxa_tree = NULL,
-  #   ref_seq   = NULL
-  # )
+  contains = "mass_dataset",
+  validity = check_wearable_dataset_class
 )
+
 
 #' @title create_wearable_dataset
 #' @description Create the wearable_dataset object.
 #' @docType methods
 #' @author Xiaotao Shen
 #' \email{shenxt1990@@outlook.com}
-#' @param expression_data MS1 peak table name.
-#' \url{https://tidywearable.github.io/wearabledataset/articles/data_import_and_export.html}
+#' @param expression_data expression_data.
 #' @param sample_info Sample information name.
-#' \url{https://tidywearable.github.io/wearabledataset/articles/data_import_and_export.html}
-#' @param variable_info MS1 peak table name.
+#' @param variable_info Variable information.
 #' Columns are samples and rows are variables.
-#' \url{https://tidywearable.github.io/wearabledataset/articles/data_import_and_export.html}
 #' @param sample_info_note Sample information name.
 #' \url{https://tidywearable.github.io/wearabledataset/articles/data_import_and_export.html}
 #' @param variable_info_note Sample information name.
@@ -87,6 +72,12 @@ create_wearable_dataset <-
         )
     }
 
+    if(all(colnames(sample_info) != "class")){
+      sample_info <-
+        sample_info %>%
+        dplyr::mutate(class = "Subject")
+    }
+
     check_result <-
       check_wearable_dataset(
         expression_data = expression_data,
@@ -126,7 +117,6 @@ create_wearable_dataset <-
       sample_info_note = sample_info_note,
       variable_info_note = variable_info_note,
       process_info = process_info,
-      # version = as.character(utils::packageVersion(pkg = "wearabledataset"))
       version = "0.99.1"
     )
     invisible(object)
