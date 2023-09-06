@@ -59,7 +59,7 @@ Suggests:
     testthat (>= 3.0.0)
 Note:
 Remotes: 
-    gitlab::tidymass/massdataset
+    gitlab::tidymass/massdataset,
     gitlab::tidymass/masstools
 biocViews: wearable
 Config/testthat/edition: 3
