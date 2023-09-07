@@ -26,6 +26,15 @@ setClass(
 #' @return A wearable_dataset-class object.
 #' @importClassesFrom massdataset tidymass_parameter
 #' @export
+#' @examples
+#' data("expression_data", package = "wearabledataset")
+#' data("variable_info", package = "wearabledataset")
+#' data("sample_info", package = "wearabledataset")
+#' object <-
+#' create_wearable_dataset(expression_data = expression_data,
+#' sample_info = sample_info,
+#' variable_info = variable_info)
+#' object
 
 create_wearable_dataset <-
   function(expression_data,

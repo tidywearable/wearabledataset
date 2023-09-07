@@ -48,7 +48,10 @@ Imports:
     vctrs,
     ggraph,
     data.table,
-    dtplyr
+    dtplyr,
+    lubridate,
+    hms,
+    scales
 Suggests: 
     knitr,
     rmarkdown,

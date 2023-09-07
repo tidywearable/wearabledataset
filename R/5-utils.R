@@ -1,4 +1,6 @@
 
+
+
 ####This code is from MicrobiotaProcess, credit should go its developer
 
 ####This code is from MicrobiotaProcess, credit should go its developer
@@ -110,3 +112,15 @@ calculate <-
       sum_intensity = sum(value, ...)
     )
   }
+
+
+base_theme <-
+  ggplot2::theme_bw() +
+  ggplot2::theme(
+    axis.text =  ggplot2::element_text(size = 12),
+    axis.title =  ggplot2::element_text(size = 13),
+    panel.grid.minor =  ggplot2::element_blank(),
+    plot.background =  ggplot2::element_rect(fill = "transparent"),
+    panel.background =  ggplot2::element_rect(fill = "transparent"),
+    strip.text =  ggplot2::element_text(size = 12)
+  )

@@ -33,6 +33,16 @@ A wearable_dataset-class object.
 \description{
 Create the wearable_dataset object.
 }
+\examples{
+data("expression_data", package = "wearabledataset")
+data("variable_info", package = "wearabledataset")
+data("sample_info", package = "wearabledataset")
+object <-
+create_wearable_dataset(expression_data = expression_data,
+sample_info = sample_info,
+variable_info = variable_info)
+object
+}
 \author{
 Xiaotao Shen
 \email{shenxt1990@outlook.com}

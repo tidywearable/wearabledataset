@@ -18,4 +18,9 @@ globalVariables(names = c("variable_id",
                           "Kingdom",
                           "from",
                           "to",
-                          "node"))
+                          "node",
+                          "start",
+                          "accurate_time",
+                          "end",
+                          "start_time",
+                          "end_time"))
