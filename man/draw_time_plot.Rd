@@ -98,9 +98,7 @@ draw_time_plot(
 A ggplot2 object.
 }
 \description{
-time_plot
-
-time_plot
+Draw time series plot
 }
 \examples{
 data("expression_data", package = "wearabledataset")
@@ -108,14 +106,24 @@ data("sample_info", package = "wearabledataset")
 data("variable_info", package = "wearabledataset")
 object <-
 create_wearable_dataset(expression_data, sample_info, variable_info)
-
+object <- object \%>\% mutate2sample(what = "date")
+unique(object@sample_info$date)
+object <-
+object \%>\% activate_wearable_dataset(what = "sample_info") \%>\%
+filter(date \%in\% c("2022-08-08", "2022-08-09"))
+expression_data <- extract_expression_data(object)
+sample_info <- extract_sample_info(object)
 x = as.numeric(expression_data[1,])
 accurate_time = sample_info$accurate_time
-
 draw_time_plot(x = x, accurate_time = accurate_time)
 draw_time_plot(x = object, variable_index = 1,
 facet = TRUE,
 facet_function = "facet_wrap")
+draw_time_plot(x = object,
+               variable_index = 1,
+               facet = TRUE,
+               facet_function = "facet_grid",
+               facet_grid_by = "rows", time_gap = 2)
 }
 \author{
 Xiaotao Shen

@@ -1,5 +1,5 @@
 #' @title Draw time serial plot
-#' @description time_plot
+#' @description Draw time series plot
 #' @author Xiaotao Shen
 #' \email{shenxt1990@@outlook.com}
 #' @param x A numeric vector or wearable_dataset object.
@@ -25,14 +25,24 @@
 #' data("variable_info", package = "wearabledataset")
 #' object <-
 #' create_wearable_dataset(expression_data, sample_info, variable_info)
-#'
+#' object <- object %>% mutate2sample(what = "date")
+#' unique(object@sample_info$date)
+#' object <-
+#' object %>% activate_wearable_dataset(what = "sample_info") %>%
+#' filter(date %in% c("2022-08-08", "2022-08-09"))
+#' expression_data <- extract_expression_data(object)
+#' sample_info <- extract_sample_info(object)
 #' x = as.numeric(expression_data[1,])
 #' accurate_time = sample_info$accurate_time
-#'
 #' draw_time_plot(x = x, accurate_time = accurate_time)
 #' draw_time_plot(x = object, variable_index = 1,
 #' facet = TRUE,
 #' facet_function = "facet_wrap")
+#' draw_time_plot(x = object,
+#'                variable_index = 1,
+#'                facet = TRUE,
+#'                facet_function = "facet_grid",
+#'                facet_grid_by = "rows", time_gap = 2)
 
 draw_time_plot <-
   function(x,
@@ -100,7 +110,7 @@ draw_time_plot.numeric <-
       data.frame(accurate_time, x) %>%
       dtplyr::lazy_dt() %>%
       filter(!is.na(x)) %>%
-      mutate(day = lubridate::date(accurate_time)) %>%
+      mutate(date = lubridate::date(accurate_time)) %>%
       mutate(time = strftime(
         accurate_time,
         format = "%H:%M:%S",
@@ -111,8 +121,8 @@ draw_time_plot.numeric <-
       dplyr::mutate(time = as.POSIXct(time),
                     week = format(accurate_time, "%a")) %>%
       dplyr::mutate(week = paste(week,
-                                 lubridate::month(day),
-                                 lubridate::day(day),
+                                 lubridate::month(date),
+                                 lubridate::day(date),
                                  sep = "-")) %>%
       dplyr::mutate(week = factor(week, unique(week))) %>%
       as.data.frame()
@@ -193,7 +203,7 @@ draw_time_plot.wearable_dataset <-
       data.frame(accurate_time, x) %>%
       dtplyr::lazy_dt() %>%
       filter(!is.na(x)) %>%
-      mutate(day = lubridate::date(accurate_time)) %>%
+      mutate(date = lubridate::date(accurate_time)) %>%
       mutate(time = strftime(
         accurate_time,
         format = "%H:%M:%S",
@@ -204,8 +214,8 @@ draw_time_plot.wearable_dataset <-
       dplyr::mutate(time = as.POSIXct(time),
                     week = format(accurate_time, "%a")) %>%
       dplyr::mutate(week = paste(week,
-                                 lubridate::month(day),
-                                 lubridate::day(day),
+                                 lubridate::month(date),
+                                 lubridate::day(date),
                                  sep = "-")) %>%
       dplyr::mutate(week = factor(week, unique(week))) %>%
       as.data.frame()
@@ -235,7 +245,6 @@ draw_time_plot.wearable_dataset <-
 #' @method draw_time_plot default
 #' @rdname draw_time_plot
 #' @title Draw time serial plot
-#' @description time_plot
 #' @author Xiaotao Shen
 #' \email{shenxt1990@@outlook.com}
 #' @param x A numeric vector or wearable_dataset object.
@@ -295,15 +304,15 @@ draw_time_plot_inner <-
     day_night_df <-
       data.frame(start = sun_rise,
                  end = sun_set,
-                 day = lubridate::date(sun_rise)) %>%
+                 date = lubridate::date(sun_rise)) %>%
       dplyr::mutate(
         start_time = as.POSIXct(hms::as_hms(start)),
         end_time = as.POSIXct(hms::as_hms(end)),
-        week = format(day, "%a")
+        week = format(date, "%a")
       ) %>%
       dplyr::mutate(week = paste(week,
-                                 lubridate::month(day),
-                                 lubridate::day(day),
+                                 lubridate::month(date),
+                                 lubridate::day(date),
                                  sep = "-")) %>%
       dplyr::mutate(week = factor(week, unique(week)))
 
@@ -385,26 +394,26 @@ draw_time_plot_inner <-
         if (facet_grid_by == "rows") {
           plot <-
             plot +
-            facet_grid(rows = vars(day))
+            facet_grid(rows = vars(date))
         } else{
           plot <-
             plot +
-            facet_grid(cols = vars(day))
+            facet_grid(cols = vars(date))
         }
       } else{
         if (!missing(facet_wrap_nrow)) {
           plot <-
             plot +
-            facet_wrap(facets = vars(day), nrow = nrow)
+            facet_wrap(facets = vars(date), nrow = nrow)
         } else{
           if (!missing(facet_wrap_ncol)) {
             plot <-
               plot +
-              facet_wrap(facets = vars(day), ncol = facet_wrap_ncol)
+              facet_wrap(facets = vars(date), ncol = facet_wrap_ncol)
           } else{
             plot <-
               plot +
-              facet_wrap(facets = vars(day))
+              facet_wrap(facets = vars(date))
           }
         }
       }

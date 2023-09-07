@@ -10,11 +10,16 @@
 #' @export
 mutate2sample <-
   function(object,
-           what = c("mean_intensity",
-                    "median_intensity",
-                    "sum_intensity",
-                    "na_number",
-                    "na_prop"),
+           what = c(
+             "mean_intensity",
+             "median_intensity",
+             "sum_intensity",
+             "na_number",
+             "na_prop",
+             "date",
+             "week",
+             "time"
+           ),
            according_to_variables = "all",
            ...) {
     UseMethod("mutate2sample")
@@ -22,17 +27,28 @@ mutate2sample <-
 
 #' @method mutate2sample wearable_dataset
 #' @rdname mutate2sample
+#' @param object wearable_dataset
+#' @param what which you want to mutate
+#' @param according_to_variables (required) What variables used to calculate.
+#' Default is "all". If you
+#' want to use only several variables, provide their names as a vector.
+#' @param ... other params
 #' @importFrom tibble column_to_rownames
 #' @importFrom massdataset check_column_name
 #' @export
 
 mutate2sample.wearable_dataset <-
   function(object,
-           what = c("sum_intensity",
-                    "mean_intensity",
-                    "median_intensity",
-                    "na_number",
-                    "na_prop"),
+           what = c(
+             "sum_intensity",
+             "mean_intensity",
+             "median_intensity",
+             "na_number",
+             "na_prop",
+             "date",
+             "week",
+             "time"
+           ),
            according_to_variables = "all",
            ...) {
     what <-
@@ -56,8 +72,7 @@ mutate2sample.wearable_dataset <-
 
     if (length(according_to_variables) == 0) {
       stop(
-        "All the variables you provide in according_to_variables are not in the object.
-           Please check."
+        "All the variables you provide in according_to_variables are not in the object. Please check."
       )
     }
 
@@ -80,13 +95,36 @@ mutate2sample.wearable_dataset <-
             sum(is.na(x)) / length(x)
           })
       }
-    } else{
+    }
+
+    if (what == "sum_intensity" |
+        what == "mean_intensity" | what == "median_intensity") {
       new_info <-
         expression_data[according_to_variables, , drop = FALSE] %>%
         apply(2, function(x) {
           calculate(x, what = what)
         })
+    }
 
+    if (what == "date") {
+      new_info <-
+        lubridate::date(sample_info$accurate_time)
+    }
+
+    if (what == "week") {
+      new_info <-
+        format(sample_info$accurate_time, "%a")
+    }
+
+    if (what == "time") {
+      new_info <-
+        strftime(
+          sample_info$accurate_time,
+          format = "%H:%M:%S",
+          tz = lubridate::tz(sample_info$accurate_time[1])
+        ) %>%
+        hms::as_hms() %>%
+        as.POSIXct()
     }
 
     new_column_name <-
