@@ -1,56 +1,47 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# `laggedcor`: lagged corrrelation <img src="man/figures/laggedcor_logo.png" align="right" alt="" width="120" />
+# `wearabledataset`: lagged corrrelation <img src="man/figures/wearabledataset_logo.png" align="right" alt="" width="120" />
 
-[![](https://www.r-pkg.org/badges/version/laggedcor?color=green)](https://cran.r-project.org/package=laggedcor)
-[![](https://img.shields.io/github/languages/code-size/laggedcor/laggedcor.svg)](https://github.com/laggedcor/laggedcor)
-[![Dependencies](https://tinyverse.netlify.com/badge/laggedcor)](https://cran.r-project.org/package=laggedcor)
+[![](https://www.r-pkg.org/badges/version/wearabledataset?color=green)](https://cran.r-project.org/package=wearabledataset)
+[![](https://img.shields.io/github/languages/code-size/wearabledataset/wearabledataset.svg)](https://github.com/wearabledataset/wearabledataset)
+[![Dependencies](https://tinyverse.netlify.com/badge/wearabledataset)](https://cran.r-project.org/package=wearabledataset)
 [![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 ---
 
-`laggedcor` is a part of [tidywearable](https://tidywearable.github.io/).
+`wearabledataset` is a part of [tidywearable](https://tidywearable.github.io/).
 
 ## **About**
 
 ---
 
-The `laggedcor` is an R package used to calculate the lagged correlation for omics and wearable data.
-
-<img src="man/figures/laggedcor_all_packages.png" align="middle" alt="" width = "100%"/>
+The `wearabledataset` is an R package used to calculate the lagged correlation for omics and wearable data.
 
 ## **Installation**
 
 ---
 
-You can install `laggedcor` from
-[GitHub](https://github.com/jaspershen/laggedcor).
+You can install `wearabledataset` from
+[GitHub](https://github.com/tidywearable/wearabledataset).
 
 ``` r
 if(!require(devtools)){
 install.packages("devtools")
 }
-devtools::install_github("jaspershen/laggedcor")
-```
-
-Then you can use `laggedcor_install()` to install all the packages in
-`laggedcor`.
-
-``` r
-library(laggedcor)
+devtools::install_github("tidywearable/wearabledataset")
 ```
 
 ## **Usage**
 
 ---
 
-Now, `laggedcor` contains 8 packages, which are listed below:
+Now, `wearabledataset` contains 8 packages, which are listed below:
 
 ## **Need help?**
 
 ---
 
-If you have any questions about `laggedcor`, please don’t hesitate to
+If you have any questions about `wearabledataset`, please don’t hesitate to
 email me (<shenxt@stanford.edu>) or reach out me via the social medias below.
 
 <i class="fa fa-weixin"></i>  [shenxt1990](https://www.shenxt.info/files/wechat_QR.jpg)
@@ -67,7 +58,7 @@ Palo Alto, CA
 
 ---
 
-If you use `laggedcor` in you publications, please cite this publication:
+If you use `wearabledataset` in you publications, please cite this publication:
 
 X. Shen, R. Wang, X. Xiong, Y. Yin, Y. Cai, Z. Ma, N. Liu, and Z.-J.
 Zhu\* (Corresponding Author), Metabolic Reaction Network-based Recursive
