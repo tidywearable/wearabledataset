@@ -1,7 +1,7 @@
 Package: wearabledataset
 Title: wearabledataset
 Version: 0.99.10
-Date: 2023-04-19
+Date: 2023-09-07
 Authors@R: 
     person(given = "Xiaotao",
            family = "Shen",

@@ -1,23 +1,3 @@
-
-
-
-####This code is from MicrobiotaProcess, credit should go its developer
-
-####This code is from MicrobiotaProcess, credit should go its developer
-
-# ####This code is from MicrobiotaProcess, credit should go its developer
-# build_refseq <- function(x) {
-#   flag <- guess_rownames(x)
-#   refseq <- switch(
-#     flag,
-#     DNA = Biostrings::DNAStringSet(x),
-#     AA = Biostrings::AAStringSet(x),
-#     RNA = Biostrings::RNAStringSet(x),
-#     Other = NULL
-#   )
-#   return(refseq)
-# }
-
 ####This code is from MicrobiotaProcess, credit should go its developer
 grepl_data.frame <- function(pattern, x, ...) {
   y <- if (length(x)) {
