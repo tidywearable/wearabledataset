@@ -4,9 +4,7 @@
 #' @author Xiaotao Shen
 #' \email{shenxt1990@@outlook.com}
 #' @importFrom stringr str_replace str_split str_replace_all str_trim
-#' @importFrom ComplexHeatmap Heatmap columnAnnotation anno_barplot
 #' @importFrom grid gpar
-#' @importFrom ggplotify as.ggplot
 #' @importFrom dplyr filter mutate select everything left_join bind_rows arrange
 #' @importFrom dplyr desc distinct bind_cols bind_rows pull
 #' @importFrom plyr dlply .
@@ -14,18 +12,13 @@
 #' @importFrom utils packageDescription write.csv
 #' @importFrom cli rule symbol
 #' @importFrom crayon green blue col_align red black white style make_style num_colors
-#' @importFrom plotly ggplotly
-#' @importFrom pbapply pblapply
-#' @importFrom openxlsx write.xlsx
 #' @importFrom purrr map map2
-#' @importFrom readr write_csv read_csv
 #' @importFrom methods slot slot<-
 #' @import ggplot2
 #' @importFrom methods .hasSlot new is
 #' @importFrom stats p.adjust rgamma sd median time setNames
 #' @importFrom utils data str head tail packageVersion write.table
 #' @importFrom magrittr %>%
-#' @importFrom ggsci pal_lancet
 #' @importFrom masstools read_mgf read_mzxml ms2_plot
 #' @importFrom rlang warn quo_is_null abort seq2 syms
 #' @importFrom tibble add_column as_tibble
