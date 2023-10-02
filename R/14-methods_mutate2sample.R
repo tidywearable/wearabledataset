@@ -1,12 +1,18 @@
-####Mutate new columns into sample_info
-#' @title Mutate new columns into sample_info
-#' @param object wearable_dataset
-#' @param what which you want to mutate
-#' @param according_to_variables (required) What variables used to calculate.
-#' Default is "all". If you
-#' want to use only several variables, provide their names as a vector.
-#' @param ... other params
-#' @return wearable_dataset or data.frame.
+#' Mutate Sample-based Attributes to a `wearable_dataset` Object
+#'
+#' This generic function mutates or adds specific attributes to samples in the provided `wearable_dataset` object.
+#'
+#' @param object An object to be mutated. The specific class-based method to use will depend on the class of this object.
+#' @param what A character vector specifying which attributes to compute or mutate. Possible values include
+#'   "mean_intensity", "median_intensity", "sum_intensity", "na_number", "na_prop", "date", "week", and "time".
+#' @param according_to_variables Specifies which variables to consider when performing the mutation.
+#'   Defaults to "all".
+#' @param ... Further arguments to be passed to specific methods.
+#'
+#' @return An object with mutated or added sample-based attributes.
+#'
+#' @author Xiaotao Shen \email{shenxt1990@outlook.com}
+#'
 #' @export
 mutate2sample <-
   function(object,
@@ -27,12 +33,12 @@ mutate2sample <-
 
 #' @method mutate2sample wearable_dataset
 #' @rdname mutate2sample
-#' @param object wearable_dataset
-#' @param what which you want to mutate
-#' @param according_to_variables (required) What variables used to calculate.
-#' Default is "all". If you
-#' want to use only several variables, provide their names as a vector.
-#' @param ... other params
+#' @param object A `wearable_dataset` object to be mutated.
+#' @param what A character vector specifying which attributes to compute or mutate. Possible values include
+#'   "sum_intensity", "mean_intensity", "median_intensity", "na_number", "na_prop", "date", "week", and "time".
+#' @param according_to_variables Specifies which variables to consider when performing the mutation.
+#'   Defaults to "all".
+#' @param ... Additional parameters to be passed on.
 #' @importFrom tibble column_to_rownames
 #' @importFrom massdataset check_column_name
 #' @export

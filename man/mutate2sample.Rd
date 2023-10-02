@@ -3,7 +3,7 @@
 \name{mutate2sample}
 \alias{mutate2sample}
 \alias{mutate2sample.wearable_dataset}
-\title{Mutate new columns into sample_info}
+\title{Mutate Sample-based Attributes to a \code{wearable_dataset} Object}
 \usage{
 mutate2sample(
   object,
@@ -22,19 +22,22 @@ mutate2sample(
 )
 }
 \arguments{
-\item{object}{wearable_dataset}
+\item{object}{A \code{wearable_dataset} object to be mutated.}
 
-\item{what}{which you want to mutate}
+\item{what}{A character vector specifying which attributes to compute or mutate. Possible values include
+"sum_intensity", "mean_intensity", "median_intensity", "na_number", "na_prop", "date", "week", and "time".}
 
-\item{according_to_variables}{(required) What variables used to calculate.
-Default is "all". If you
-want to use only several variables, provide their names as a vector.}
+\item{according_to_variables}{Specifies which variables to consider when performing the mutation.
+Defaults to "all".}
 
-\item{...}{other params}
+\item{...}{Additional parameters to be passed on.}
 }
 \value{
-wearable_dataset or data.frame.
+An object with mutated or added sample-based attributes.
 }
 \description{
-Mutate new columns into sample_info
+This generic function mutates or adds specific attributes to samples in the provided \code{wearable_dataset} object.
+}
+\author{
+Xiaotao Shen \email{shenxt1990@outlook.com}
 }

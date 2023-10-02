@@ -5,7 +5,7 @@
 \alias{draw_time_plot.numeric}
 \alias{draw_time_plot.wearable_dataset}
 \alias{draw_time_plot.default}
-\title{Draw time serial plot}
+\title{Draw a time serial plot}
 \usage{
 draw_time_plot(
   x,
@@ -95,10 +95,11 @@ draw_time_plot(
 \item{...}{othter arguments}
 }
 \value{
-A ggplot2 object.
+A time plot with specified attributes.
 }
 \description{
-Draw time series plot
+This generic function creates a time-based plot based
+on the input data and the specified parameters.
 }
 \examples{
 data("expression_data", package = "wearabledataset")

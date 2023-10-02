@@ -3,7 +3,7 @@
 \name{mutate2variable}
 \alias{mutate2variable}
 \alias{mutate2variable.wearable_dataset}
-\title{Mutate new columns into variable_info}
+\title{Mutate Variable-based Attributes}
 \usage{
 mutate2variable(
   object,
@@ -20,19 +20,22 @@ mutate2variable(
 )
 }
 \arguments{
-\item{object}{wearable_dataset}
+\item{object}{An object to be mutated. The specific class-based method to use will depend on the class of this object.}
 
-\item{what}{which you want to mutate}
+\item{what}{A character vector specifying which attributes to compute or mutate. Possible values include
+"mean_intensity", "median_intensity", "sum_intensity", "na_number", and "na_prop".}
 
-\item{according_to_samples}{(required) What samples used to calculate.
-Default is "all". If you
-want to use only several samples, provide their names as a vector.}
+\item{according_to_samples}{Specifies which samples to consider when performing the mutation.
+Defaults to "all".}
 
-\item{...}{other params}
+\item{...}{Further arguments to be passed to specific methods.}
 }
 \value{
-wearable_dataset or data.frame.
+An object with mutated or added variable-based attributes.
 }
 \description{
-Mutate new columns into variable_info
+This generic function mutates or adds specific attributes to variables in the provided object.
+}
+\author{
+Xiaotao Shen \email{shenxt1990@outlook.com}
 }

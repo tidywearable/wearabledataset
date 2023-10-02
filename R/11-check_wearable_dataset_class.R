@@ -1,10 +1,28 @@
-#' @title check_wearable_dataset_class
-#' @description Check wearable_dataset class object.
-#' @docType methods
-#' @author Xiaotao Shen
-#' \email{shenxt1990@@outlook.com}
-#' @param object wearable_dataset class.
-#' @return Notice of data checking.
+#' Validate `wearable_dataset` Object Structure
+#'
+#' This function checks the integrity and structure of a given `wearable_dataset` object
+#' from the wearabledataset package to ensure that it meets specific criteria and standards.
+#'
+#' @param object An object of class `wearable_dataset` to be validated.
+#'
+#' @return A logical value `TRUE` if the object passes all checks. If there are any issues,
+#'   it returns a character vector detailing the errors found.
+#'
+#' @details
+#' The function checks:
+#' - `variable_info`, `sample_info`, `sample_info_note`, and `variable_info_note` for the presence
+#'   of required columns and their uniqueness.
+#' - `accurate_time` in `sample_info` for being of class `POSIXct`.
+#' - Consistency between the number of rows and columns in `expression_data` and other slots.
+#'
+#' @examples
+#' \dontrun{
+#' dataset <- your_dataset_function() # replace with how you obtain a wearable_dataset object
+#' check_wearable_dataset_class(dataset)
+#' }
+#'
+#' @author Xiaotao Shen \email{shenxt1990@outlook.com}
+#'
 #' @export
 
 check_wearable_dataset_class <-

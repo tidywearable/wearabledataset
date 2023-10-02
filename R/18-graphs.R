@@ -1,24 +1,25 @@
-#' @title Draw time serial plot
-#' @description Draw time series plot
+#' @title Draw a time serial plot
+#' @description This generic function creates a time-based plot based
+#' on the input data and the specified parameters.
 #' @author Xiaotao Shen
 #' \email{shenxt1990@@outlook.com}
 #' @param x A numeric vector or wearable_dataset object.
-#' @param accurate_time Accurate time
-#' @param variable_index index of variable
-#' @param color color
-#' @param y_axis_name y_axis_name
-#' @param sun_rise_time should be 24 hour format, default "6:00:00"
-#' @param sun_set_time should be 24 hour format, default "18:00:00"
-#' @param time_gap time gap for x axis text.
-#' @param add_point add point or not.
-#' @param facet facet or not.
-#' @param facet_function facet function, facet_grid or facet_wrap
-#' @param facet_grid_by facet_grid, rows or cols
-#' @param facet_wrap_nrow nrow for facet_wrap
-#' @param facet_wrap_ncol ncol for facet_wrap,
-#' @param ... othter arguments
+#' @param accurate_time A vector or data frame column representing the time points corresponding to `x`.
+#' @param variable_index Index or name of the variable to be plotted (used if `x` is a data frame).
+#' @param color Color for the plot. Default is "blue".
+#' @param y_axis_name Name for the y-axis. Default is "Value".
+#' @param sun_rise_time Time at which sunrise occurs. Default is "6:00:00".
+#' @param sun_set_time Time at which sunset occurs. Default is "18:00:00".
+#' @param time_gap Gap for time ticks on the x-axis. Default is 12.
+#' @param add_point Logical; whether to add individual data points to the plot. Default is FALSE.
+#' @param facet Logical; whether to use faceting in the plot. Default is FALSE.
+#' @param facet_function Character; which faceting function to use. Options are "facet_grid" and "facet_wrap".
+#' @param facet_grid_by Character; specifies whether to facet by "rows" or "cols" when using `facet_grid`.
+#' @param facet_wrap_nrow Numeric; number of rows for the facet wrap layout.
+#' @param facet_wrap_ncol Numeric; number of columns for the facet wrap layout.
+#' @param ... Further arguments to be passed to specific methods.
 #' @export
-#' @return A ggplot2 object.
+#' @return A time plot with specified attributes.
 #' @examples
 #' data("expression_data", package = "wearabledataset")
 #' data("sample_info", package = "wearabledataset")

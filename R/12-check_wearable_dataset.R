@@ -1,14 +1,36 @@
-#' @title check_wearable_dataset
-#' @description Check data format for wearable_dataset class object.
-#' @docType methods
-#' @author Xiaotao Shen
-#' \email{shenxt1990@@outlook.com}
-#' @param expression_data expression_data.
-#' @param sample_info sample_info.
-#' @param variable_info variable_info.
-#' @param sample_info_note sample_info_note.
-#' @param variable_info_note variable_info_note.
-#' @return Notice of data checking.
+#' Validate Components of a `wearable_dataset` Structure
+#'
+#' This function checks the individual components that make up the structure of
+#' a `wearable_dataset` object from the wearabledataset package. It ensures that the components
+#' meet specific criteria and standards.
+#'
+#' @param expression_data A data.frame representing the expression data.
+#' @param sample_info A data.frame representing the sample information.
+#' @param variable_info A data.frame representing the variable information.
+#' @param sample_info_note (Optional) A data.frame representing additional notes on the sample information.
+#' @param variable_info_note (Optional) A data.frame representing additional notes on the variable information.
+#'
+#' @return A character string detailing the status of the validation. If there are any issues,
+#'   it returns a string starting with "error:". If all checks pass, it returns "all good.".
+#'
+#' @details
+#' The function checks each parameter's type and relevant components:
+#' - Ensures `expression_data`, `sample_info`, and `variable_info` are provided.
+#' - Validates the structure and required columns for `sample_info`, `variable_info`, `sample_info_note`,
+#'   and `variable_info_note`.
+#' - Checks consistency and correspondence between columns, row names, and IDs among the provided datasets.
+#'
+#' @examples
+#' \dontrun{
+#' expression_data_sample <- data.frame() # replace with sample expression data
+#' sample_info_sample <- data.frame() # replace with sample sample_info data
+#' variable_info_sample <- data.frame() # replace with sample variable_info data
+#'
+#' check_wearable_dataset(expression_data_sample, sample_info_sample, variable_info_sample)
+#' }
+#'
+#' @author Xiaotao Shen \email{shenxt1990@outlook.com}
+#'
 #' @export
 
 check_wearable_dataset <-

@@ -1,12 +1,18 @@
-####Mutate new columns into variable_info
-#' @title Mutate new columns into variable_info
-#' @param object wearable_dataset
-#' @param what which you want to mutate
-#' @param according_to_samples (required) What samples used to calculate.
-#' Default is "all". If you
-#' want to use only several samples, provide their names as a vector.
-#' @param ... other params
-#' @return wearable_dataset or data.frame.
+#' Mutate Variable-based Attributes
+#'
+#' This generic function mutates or adds specific attributes to variables in the provided object.
+#'
+#' @param object An object to be mutated. The specific class-based method to use will depend on the class of this object.
+#' @param what A character vector specifying which attributes to compute or mutate. Possible values include
+#'   "mean_intensity", "median_intensity", "sum_intensity", "na_number", and "na_prop".
+#' @param according_to_samples Specifies which samples to consider when performing the mutation.
+#'   Defaults to "all".
+#' @param ... Further arguments to be passed to specific methods.
+#'
+#' @return An object with mutated or added variable-based attributes.
+#'
+#' @author Xiaotao Shen \email{shenxt1990@outlook.com}
+#'
 #' @export
 mutate2variable <-
   function(object,
